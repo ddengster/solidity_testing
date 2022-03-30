@@ -31,5 +31,23 @@ contract("TestContract", (accounts)=> {
     const {0: strValue, 1: intValue} = result3;
     assert.equal(strValue, "ret2");
     assert.equal(intValue, 12);
+
+    // make and commit a transaction via the CallInteractive function
+    // note that you need an event emitted in the solidity code for the logs[] array to populate
+    const result4 = await contractInstance.CallInteractive();
+    console.log(result4);
+    assert.equal(result4.logs[0].args.val, 3);
+
+    // make a 'call' without actually commiting the transaction
+    const result4a = await contractInstance.CallInteractive.call();
+    console.log(result4a);
+    assert.equal(result4a, 6);
+
+    const result5 = await contractInstance.CallInteractive();
+    assert.equal(result5.logs[0].args.val, 6);
+
+    //get the value stored
+    const result5a = await contractInstance.GetInteractive.call();
+    assert.equal(result5a, 6);
   });
 });

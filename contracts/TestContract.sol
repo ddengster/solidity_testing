@@ -18,4 +18,18 @@ contract TestContract {
     // let newstr = mystr.append(num);
     return ("ret2", 12);
   }
+
+  event ValueSet(int val);
+  int interactive = 0;
+  function CallInteractive() external returns(int) {
+    interactive = interactive + 3;
+
+    // essential for grabbing return values; since instance.CallInteractive() will not return the ret value!
+    emit ValueSet(interactive); 
+    return interactive;
+  }
+
+  function GetInteractive() external view returns(int) {
+    return interactive;
+  }
 }
